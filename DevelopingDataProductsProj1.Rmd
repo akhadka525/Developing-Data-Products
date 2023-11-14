@@ -1,0 +1,51 @@
+---
+title: "Creating a web page using R Markdown and Leaflet"
+author: "Anil K. Khadka"
+date: "2023-11-13"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introdution
+
+We will use the **Rmarkdown** and **Leaflet** to create a webpage which contain a map of some of the famous places to visit in Nepal.
+
+We will use the library **leaflet**.
+
+```{r, echo=TRUE,warning=FALSE,message=FALSE}
+
+library(leaflet)
+
+```
+
+
+Now we will create a dataframe of some of the famous places to visit in Nepal to add in the Map. 
+
+```{r, echo=TRUE, message=FALSE,warning=FALSE}
+
+## Create a dataframe of palces to add
+place <- c("Kathmandu", "Pokhara", "Annapurna Base Camp", "Everest Base Camp", "Janaki Temple", "Lumbini", "Rara Lake", "Jomsom", "Illam", "Chitwan National Park", "Dharan")
+
+lat <- c(27.7172, 28.2096, 28.53, 28.0023, 26.7304, 27.4833, 29.5239, 28.7746, 26.9112, 27.5193, 26.8065)
+
+lon <- c(85.324, 83.9856, 83.878, 86.8529, 85.9256, 83.2764, 82.0788, 83.773, 87.9237, 84.3135, 87.2846)
+
+df_palcesToAdd <- data.frame(place, lat, lon)
+
+```
+
+
+Now we will create an interactive map with **leaflet**
+
+```{r, echo=TRUE,warning=FALSE,message=FALSE}
+
+df_palcesToAdd %>%
+        leaflet() %>%
+        addTiles() %>%
+        addMarkers(lat = lat, lng = lon, popup = place, 
+                   clusterOptions = markerClusterOptions)
+
+```

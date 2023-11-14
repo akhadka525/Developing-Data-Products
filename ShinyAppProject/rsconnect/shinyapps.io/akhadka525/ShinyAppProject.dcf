@@ -1,0 +1,12 @@
+name: ShinyAppProject
+title: ShinyAppProject
+username: akhadka525
+account: akhadka525
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 10524069
+bundleId: 7927345
+url: https://akhadka525.shinyapps.io/ShinyAppProject/
+version: 1
+asMultiple: FALSE
+asStatic: FALSE

@@ -1,0 +1,82 @@
+---
+title: "CO2 Data Analysis in Shiny App"
+author: "Anil K. Khadka"
+date: "2023-11-14"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE,message=FALSE,warning=FALSE}
+knitr::opts_chunk$set(
+	echo = TRUE,
+	message = FALSE,
+	warning = FALSE,
+	cache = TRUE,
+	tidy = TRUE)
+```
+
+
+## CO2 Data Analysis Shiny App
+
+### Introduction
+
+- Welcome to the CO2 Data Analysis in Shiny App!
+
+- Explore trends and patterns in CO2 concentration.
+
+- Predict Future Concentration
+
+
+
+## User Interface
+
+### Summary
+
+- Gives the statistical summary of CO2 concentration for total observed period
+
+### Select Plot Type
+
+- Use the dropdown menu to select the type of plot you want to explore.
+
+- Options: Time Series, Trend, Monthly Boxplot, Trend and Seasonal Components, and Forecast.
+
+### Submit Button
+
+- Click the "Submit" button to generate the selected plot.
+
+
+
+## Time Series Plot: Example{.smaller}
+
+#### Selected Plot Type: Time Series
+
+- Displays the CO2 concentration over time.
+- X-axis: Date, 
+- Y-axis: CO2 concentration (ppm)
+
+```{r, echo=FALSE,warning=F,message=FALSE, fig.align='center', fig.height=4}
+
+library(datasets)
+plot(co2, xlab = "Date", 
+     ylab = " CO2 concentration (ppm)",
+     main = "")
+
+```
+
+##  Shiny App{.smaller}
+
+### Link for Shiny App 
+
+<https://akhadka525.shinyapps.io/ShinyAppProject/>
+
+### Link for GitHub Page
+
+<https://github.com/akhadka525/Developing-Data-Products>
+
+### Data Source and Acknowledgement
+
+- R inbuilt dataset : Mauna Loa Atmospheric CO2 Concentration
+
+- Keeling, C. D. and Whorf, T. P., Scripps Institution of Oceanography (SIO), University of California, La Jolla, California USA 92093-0220.
+<https://scrippsco2.ucsd.edu/data/atmospheric_co2/>
+
+### Thank You !!!

@@ -1,0 +1,141 @@
+---
+title: "Air Quality of Kathmandu in 2022"
+author: "Anil K. Khadka"
+date: "2023-11-13"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE,message=FALSE,warning=FALSE}
+knitr::opts_chunk$set(
+	echo = TRUE,
+	message = FALSE,
+	warning = FALSE,
+	cache = TRUE,
+	tidy = TRUE)
+```
+
+## Synopsis {.smaller}
+
+We will check the air quality data for the year 2022. Here we will use the PM2.5 data from the air quality station at Phora Durbar maintained by US Embassy Kathmandu. We will check two things here:
+
+- How the Pm2.5 varies daily for the year 2022 in Kathmandu Valley, and
+- The monthly PM2.5 distribution
+
+For this we will create the create the **heatmap** plot for monthVsdays to see how the PM2.5 varies each day in each months. Also, we will create the monthly average plots **boxplots** to understand the monthly variation.
+
+
+## Data download and Process: R Code{.smaller}
+
+```{r, echo=TRUE, results='hide'}
+
+## Load the library into system memory
+packages <- c("data.table", "plotly")
+installed_packages <- packages %in% rownames(installed.packages())
+if (any(installed_packages == FALSE)) {
+        install.packages(packages[!installed_packages])
+}
+invisible(lapply(packages, library, character.only = TRUE))
+
+## Download the data
+data_url <- "https://dosairnowdata.org/dos/historical/PhoraDurbarKathmandu/2022/PhoraDurbarKathmandu_PM2.5_2022_YTD.csv"
+data_file <- "pmdata.csv"
+download.file(data_url, data_file)
+
+## Read the data and preprocess
+pmdata <- data.table::fread("pmdata.csv")
+head(pmdata) ## Result not shown
+str(pmdata) ## Result not shown
+
+# Convert Date to Date class
+pmdata$Date <- as.POSIXct(pmdata$Date, format = "%Y-%m-%d %I:%M %p", 
+                          tz = "UTC")
+pmdata$Month <- format(pmdata$Date, "%b")
+
+```
+
+
+## Plot1: Heatmap of PM2.5
+
+We will create the interactive heatmap to visualize the PM2.5 daily for each month using **plotly**.
+
+```{r, echo=TRUE, results='hide'}
+
+plot_ly(pmdata, x = ~Day, y = ~Month, z = ~`NowCast Conc.`, 
+        type = "heatmap",
+        colorscale = "Viridis", width = 800,height = 6) %>% 
+        layout(title = "PM2.5 concentration for day of month for year 2022",
+               xaxis = list(title = "Day"), 
+               yaxis = list(title = "Month", categoryorder = "array", 
+                            categoryarray = month.abb[c(1:12)]),
+               legend = list(x = 0.5, y = 0.5))
+
+```
+
+## Plot1: Heatmap of PM2.5
+
+
+
+```{r, echo=FALSE, fig.align='center'}
+
+plot_ly(pmdata, x = ~Day, y = ~Month, z = ~`NowCast Conc.`, 
+        type = "heatmap",
+        colorscale = "Viridis", width = 800,height = 6) %>% 
+        layout(title = "Daily PM2.5 concentration DIstribution, 2022",
+               xaxis = list(title = "Day"), 
+               yaxis = list(title = "Month", categoryorder = "array", 
+                            categoryarray = month.abb[c(1:12)]),
+               legend = list(x = 0.5, y = 0.5))
+
+```
+
+
+## Plot2: BoxPlot of PM2.5
+
+We will create the interactive heatmap to visualize the PM2.5 daily for each month using **plotly**.
+
+```{r, echo=TRUE, results='hide'}
+
+plot_ly(pmdata,x = ~Month, y = ~`NowCast Conc.`, type = "box",
+        name = "PM2.5 Concentration") %>%
+        layout(title = "Monthly PM2.5 Concentration Distribution, 2022",
+                xaxis = list(title = "Month",
+                             categoryorder = "array", 
+                             categoryarray = month.abb[c(1:12)]),
+                yaxis = list(title = "PM2.5 Concentration", 
+                             range = c(0, 300)))
+
+```
+
+## Plot2: Boxplot of PM2.5
+
+
+```{r, echo=FALSE}
+
+plot_ly(pmdata,x = ~Month, y = ~`NowCast Conc.`, type = "box",
+        name = "PM2.5 Concentration") %>%
+        layout(title = "Monthly PM2.5 Concentration Distribution, 2022",
+                xaxis = list(title = "Month",
+                             categoryorder = "array", 
+                             categoryarray = month.abb[c(1:12)]),
+                yaxis = list(title = "PM2.5 Concentration", 
+                             range = c(0, 300)))
+
+```
+
+
+## Result
+
+- We see that days in December, January and February has high PM2.5 concentration which may reach upto 150 \(\mu g/m^3\).
+- Box plot shows that on average summer months July, August and September has lowest PM2.5 concentration.
+
+
+## Data Source and Acknowledgement
+
+Data Reference:
+
+- AirNow.gov - U.S. Embassy Kathmandu, Nepal (Phora Durbar, Kathmandu)
+
+<https://www.airnow.gov/international/us-embassies-and-consulates/#Nepal$Phora_Durbar_Kathmandu>
+
+
+## Thank You!
