@@ -47,13 +47,11 @@ knitr::opts_chunk$set(
 
 ## Time Series Plot: Example{.smaller}
 
-#### Selected Plot Type: Time Series
+```{r, echo=FALSE, fig.cap="Shiny App Code Sample", out.width = '70%', fig.align='center'}
+knitr::include_graphics("shinyappcode.png")
+```
 
-- Displays the CO2 concentration over time.
-- X-axis: Date, 
-- Y-axis: CO2 concentration (ppm)
-
-```{r, echo=FALSE,warning=F,message=FALSE, fig.align='center', fig.height=4}
+```{r, echo=FALSE,warning=F,message=FALSE, fig.align='center', fig.height=3, fig.align='center'}
 
 library(datasets)
 plot(co2, xlab = "Date", 
